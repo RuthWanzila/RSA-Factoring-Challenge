@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+import sys
+
+
+def factorize(num):
+    factors = []
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            factors.append((i, num // i))
+    return factors
+
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        return
+
+    filename = sys.argv[1]
+
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                num = int(line.strip())
+                factor_pairs = factorize(num)
+                for pair in factor_pairs:
+                    print(f"{num} = {pair[0]} * {pair[1]}")
+
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
+    except ValueError:
+        print(f"Invalid number in the file '{filename}'.")
+
+
+if __name__ == "__main__":
+    main()
